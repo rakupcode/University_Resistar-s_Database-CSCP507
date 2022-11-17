@@ -1,0 +1,71 @@
+CREATE TABLE artist (
+    artist_name VARCHAR(25),
+    birthplace VARCHAR(100),
+    age INTEGER,
+    style VARCHAR(25),
+    PRIMARY KEY (artist_name)
+);
+ 
+CREATE TABLE customer (
+    customer_name VARCHAR(25),
+    address VARCHAR(100),
+    dollars_spent DECIMAL,
+    PRIMARY KEY (customer_name)
+);
+ 
+CREATE TABLE likes_artists (
+    customer_name VARCHAR(25),
+    artist_name VARCHAR(25),
+    PRIMARY KEY (customer_name, artist_name),
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (artist_name) REFERENCES artist(artist_name)
+);
+ 
+CREATE TABLE groups (
+    group_name VARCHAR(25),
+    PRIMARY KEY(group_name)
+);
+ 
+CREATE TABLE artwork (
+    title VARCHAR(25),
+    creation_date DATE,
+    group_name VARCHAR(25),
+    price DECIMAL,
+    artist_name VARCHAR(25),
+    customer_name VARCHAR(25),
+    bought_on DATE,
+    PRIMARY KEY (title),
+    FOREIGN KEY (artist_name) REFERENCES artist(artist_name),
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (group_name) REFERENCES groups(group_name)  
+);
+ 
+CREATE TABLE likes_groups (
+    customer_name VARCHAR(25),
+    group_name VARCHAR(25),
+    PRIMARY KEY (customer_name, group_name),
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (group_name) REFERENCES groups(group_name)
+);
+ 
+insert into artist values ("Jacob Shaw", "England", 37, "Modern");
+insert into artist values ("Harish Gupta", "India", 43, "Abstract");
+ 
+insert into customer values ("Emily Williams", "Los Angeles", 6800000);
+insert into customer values ("Oscar Hernandez", "Chicago", 3100000);
+ 
+insert into groups values ("Painting");
+insert into groups values ("Sculpture");
+ 
+insert into likes_groups values ("Oscar Hernandez", "Painting");
+insert into likes_groups values ("Emily Williams", "Painting");
+insert into likes_groups values ("Emily Williams", "Sculpture");
+ 
+insert into likes_artists values ("Oscar Hernandez", "Harish Gupta");
+insert into likes_artists values ("Emily Williams", "Jacob Shaw");
+insert into likes_artists values ("Emily Williams", "Harish Gupta");
+ 
+insert into artwork values ("Dusk And Dawn", "2022-11-2", "Painting", 2300000, "Harish Gupta", "Emily Williams", "2022-11-3");
+insert into artwork values ("Faces Of Humanity", "2022-6-11", "Sculpture", 4500000, "Harish Gupta", NULL, NULL);
+insert into artwork values ("Today And Tomorrow", "2022-9-13", "Sculpture", 4500000, "Harish Gupta", "Emily Williams", "2022-10-3");
+insert into artwork values ("Man v/s God", "2022-10-3", "Painting", 3100000, "Jacob Shaw", "Oscar Hernandez", "2022-10-15");
