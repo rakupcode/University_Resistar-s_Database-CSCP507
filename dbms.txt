@@ -1,0 +1,67 @@
+
+USE art_gallary;
+CREATE TABLE artist (
+    artist_name VARCHAR(25) NOT NULL,
+    birthplace VARCHAR(100),
+    age INTEGER,
+    style VARCHAR(25),
+    PRIMARY KEY (artist_name)
+);
+ 
+CREATE TABLE customer (
+    customer_name VARCHAR(25) NOT NULL,
+    address VARCHAR(100),
+    dollars_spent DECIMAL,
+    PRIMARY KEY (customer_name)
+);
+ 
+CREATE TABLE likes_artists (
+    customer_name VARCHAR(25) NOT NULL,
+    artist_name VARCHAR(25) NOT NULL,
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (artist_name) REFERENCES artist(artist_name)
+);
+ 
+CREATE TABLE art_group (
+    group_name VARCHAR(25) NOT NULL,
+    PRIMARY KEY(group_name)
+);
+ 
+CREATE TABLE art (
+    title VARCHAR(25) NOT NULL,
+    year year,
+    type varchar(25),
+    price DECIMAL,
+    artist_name VARCHAR(25) NOT NULL,
+    bought_on DATE,
+    PRIMARY KEY (title),
+    FOREIGN KEY (artist_name) REFERENCES artist(artist_name) 
+);
+ 
+CREATE TABLE likes_group (
+    customer_name VARCHAR(25) NOT NULL,
+    group_name VARCHAR(25) NOT NULL,
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (group_name) REFERENCES groups(group_name)
+);
+
+CREATE TABLE orders (
+    customer_name VARCHAR(25) NOT NULL,
+    title VARCHAR(25) NOT NULL,
+    FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
+    FOREIGN KEY (title) REFERENCES groups(title)
+);
+
+CREATE TABLE paints (
+    artist_name VARCHAR(25) NOT NULL,
+    art VARCHAR(25) NOT NULL,
+    FOREIGN KEY (artist_name) REFERENCES customer(artist_name),
+    FOREIGN KEY (title) REFERENCES groups(title)
+);
+
+CREATE TABLE classify (
+    title VARCHAR(25) NOT NULL,
+    group_name VARCHAR(25) NOT NULL,
+    FOREIGN KEY (title) REFERENCES groups(title),
+    FOREIGN KEY (group_name) REFERENCES customer(group_name)
+);
